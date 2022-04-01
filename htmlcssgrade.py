@@ -1,6 +1,6 @@
 #######################
 # HTML/CSS Grade
-# Version 1.0.0
+# Version 1.0.1
 # Created by Joe Mazzone
 # Documentation: https://github.com/MrMazzone/HTML-CSS-Grade
 #######################
@@ -15,7 +15,7 @@ class HTML_Check:
     Properties
     ----------
     filepath - the path to the file you are checking.
-    css_obj - the cssutils object being used.
+    html_obj - the BeautifulSoup object being used.
     code - text representation of the css file, which can be printed or parsed.
 
     Methods
@@ -249,7 +249,7 @@ class CSS_Check:
             count += rule.style.cssText.count("\n")+1 
         return (count == number)
 
-    def get_num_declarations(self, number):
+    def get_num_declarations(self):
         """Gets number of declarations in CSS file"""
         count = 0
         for rule in self.css_obj:
