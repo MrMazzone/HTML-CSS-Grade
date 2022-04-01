@@ -55,7 +55,7 @@ student_html = htmlcssgrade.HTML_Check("index.html")
 **Properties:**
 - `filepath` - the path to the file you are checking.
 - `html_obj` - the BeautifulSoup object being used.
-- `code` - text representation of the css file, which can be printed or parsed.
+- `code` - text representation of the HTML file, which can be printed or parsed.
 
 **Methods:**
 - `check_HTML(code_snip)` - Given a snip of HTML code, returns True if the snip is found in the student's file.   
@@ -154,7 +154,7 @@ student_css = htmlcssgrade.CSS_Check("css/style.css")
 **Properties:**
 - `filepath` - the path to the file you are checking.
 - `css_obj` - the cssutils object being used.
-- `code` - text representation of the css file, which can be printed or parsed.
+- `code` - text representation of the CSS file, which can be printed or parsed.
 
 **Methods:**
 - `check_declaration(selector, declaration)` - Given a selector and a declaration, returns True if in CSS.   

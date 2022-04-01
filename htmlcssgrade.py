@@ -16,7 +16,7 @@ class HTML_Check:
     ----------
     filepath - the path to the file you are checking.
     html_obj - the BeautifulSoup object being used.
-    code - text representation of the css file, which can be printed or parsed.
+    code - text representation of the HTML file, which can be printed or parsed.
 
     Methods
     -------
@@ -124,7 +124,7 @@ class CSS_Check:
     ----------
     filepath - the path to the file you are checking.
     css_obj - the cssutils object being used.
-    code - text representation of the css file, which can be printed or parsed.
+    code - text representation of the CSS file, which can be printed or parsed.
 
     Methods
     -------
