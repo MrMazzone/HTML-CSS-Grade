@@ -2,7 +2,7 @@
 Autograder helper Python lib for easy HTML and CSS checks
 
 # Example
-```
+```python
 import htmlcssgrade
 
 student_css = htmlcssgrade.CSS_Check("css/style.css")
@@ -21,7 +21,7 @@ print(student_html.check_element_has_class("img", "center"))
 ```
 
 # Example with Unit Testing
-```
+```python
 import unittest
 import htmlcssgrade
 
@@ -33,7 +33,7 @@ class CodingRoomsUnitTests(unittest.TestCase):
     
     def test_check_html(self):
         student_html = htmlcssgrade.HTML_Check("index.html")
-        self.assertTrue(student_html.check_elements_attribute("img", "src", "img/paye.png"))
+        self.assertTrue(student_html.check_elements_attribute("img", "src", "img/hello.png"))
 
 if __name__ == '__main__':
     unittest.main()
@@ -41,14 +41,14 @@ if __name__ == '__main__':
 
 # Docs
 To start using the library in your code, be sure to import it 
-```
+```python
 import htmlcssgrade
 ```
 
 ### HTML_Check Class
-The first class taht can be instantiated to check an HTML file with `HTML_Check()`. The constructor has one argument, `filepath` which is the path to the file you want to check.
+The first class that can be instantiated is used to check an HTML file with `HTML_Check()`. The constructor has one argument, `filepath` which is the path to the file you want to check.
 Example:
-```
+```python
 student_html = htmlcssgrade.HTML_Check("index.html")
 ```
 
@@ -58,26 +58,96 @@ student_html = htmlcssgrade.HTML_Check("index.html")
 - `code` - text representation of the css file, which can be printed or parsed.
 
 **Methods:**
-- `check_HTML()` - Given a snip of HTML code, returns True if the snip is found in the student's file.
-- `check_element_used()` - Given an element, returns True if the student used the element.
-- `check_num_element_used()` - Given an element and number, returns True if student's file has at least specified number of that element. 
-- `get_num_element_used()` - Given an element, returns the number of times the element is used in student's file.
-- `check_element_content()` - Given an element and content, returns True if the content is in the element (ignores captialization, whitespace, etc).
-- `check_element_content_exact()` - Given an element and content, returns True if the content is in the element character for character.
-- `check_elements_attribute()` - Given an element, attribute, and value, returns True if element's attribute is equal to the value.
-- `check_element_has_attribute()` - Given an element and attribute, returns True if element's attribute was assigned any value.
-- `get_list_of_elements_with_class()` - Given a class name, returns a list of all elements with class set to given name.
-- `check_element_has_class()` - Given an element and class name, returns True if element was assigned class with given name.
-- `get_element_with_id()` - Given an id name, returns the element assigned the id.
-- `check_element_has_id()` - Given an element and id name, returns True if that element was assigned the id.
-- `check_use_css_file()` - Given a CSS filepath, returns True if HTML code uses that CSS file.
-- `check_use_js_file()` - Given a JS filepath, returns True if HTML code uses that JS file.
+- `check_HTML(code_snip)` - Given a snip of HTML code, returns True if the snip is found in the student's file.   
+   Example:
+   ```python
+   student_html.check_HTML('<meta charset="UTF-8"/>')
+   student_html.check_HTML("<p>This is a paragraph</p>")
+   ```
+- `check_element_used(element)` - Given an element, returns True if the student used the element.   
+   Example:
+   ```python
+   student_html.check_element_used("p")
+   student_html.check_element_used("ol")
+   ```
+- `check_num_element_used(element, number)` - Given an element and number, returns True if student's file has at least specified number of that element.   
+   Example:
+   ```python
+   student_html.check_num_element_used("h2", 4)
+   student_html.check_num_element_used("p", 6)
+   ```
+- `get_num_element_used(element)` - Given an element, returns the number of times the element is used in student's file.   
+   Example:
+   ```python
+   student_html.get_num_element_used("h2")
+   student_html.get_num_element_used("p")
+   ```
+- `check_element_content(element, content)` - Given an element and content, returns True if the content is in the element (ignores captialization, whitespace, etc).   
+   Example:
+   ```python
+   student_html.check_element_content("a", "Home")
+   student_html.check_element_content("title", "Super Awesome Title")
+   ```
+- `check_element_content_exact(element, content)` - Given an element and content, returns True if the content is in the element character for character.   
+   Example:
+   ```python
+   student_html.check_element_content_exact("a", "Home")
+   student_html.check_element_content_exact("title", "Super Awesome Title")
+   ```
+- `check_elements_attribute(element, attribute, value)` - Given an element, attribute, and value, returns True if element's attribute is equal to the value.   
+   Example:
+   ```python
+   student_html.check_elements_attribute("a", "href", "#")
+   student_html.check_elements_attribute("img", "src", "img/hello.png")
+   ```
+- `check_element_has_attribute(element, attribute)` - Given an element and attribute, returns True if element's attribute was assigned any value.   
+   Example:
+   ```python
+   student_html.check_element_has_attribute("img", "src")
+   student_html.check_element_has_attribute("a", "href")
+   ```
+- `get_list_of_elements_with_class(class_name)` - Given a class name, returns a list of all elements with class set to given name.      
+   Example:
+   ```python
+   student_html.get_list_of_elements_with_class("center")
+   student_html.get_list_of_elements_with_class("gold")
+   ```
+- `check_element_has_class(element, class_name)` - Given an element and class name, returns True if element was assigned class with given name.   
+   Example:
+   ```python
+   student_html.check_element_has_class("img", "center")
+   student_html.check_element_has_class("p", "center")
+   ```
+- `get_element_with_id(id_name)` - Given an id name, returns the element assigned the id.   
+   Example:
+   ```python
+   student_html.get_element_with_id("container")
+   student_html.get_element_with_id("container")
+   ```
+- `check_element_has_id(element, id_name)` - Given an element and id name, returns True if that element was assigned the id.   
+   Example:
+   ```python
+   student_html.check_element_has_id("div", "container")
+   student_html.check_element_has_id("p", "container")
+   ```
+- `check_use_css_file(css_filepath)` - Given a CSS filepath, returns True if HTML code uses that CSS file.   
+   Example:
+   ```python
+   student_html.check_use_css_file("css/style.css")
+   student_html.check_use_css_file("blah.css")
+   ```
+- `check_use_js_file(js_filepath)` - Given a JS filepath, returns True if HTML code uses that JS file.   
+   Example:
+   ```python
+   student_html.check_use_js_file("index.js")
+   student_html.check_use_js_file("blah.js")
+   ```
 
 
 ### CSS_Check Class
-The second class that can be instantiated to check a CSS file with `CSS_Check()`. The constructor has one argument, `filepath` which is the path to the file you want to check.
+The second class that can be instantiated is used to check a CSS file with `CSS_Check()`. The constructor has one argument, `filepath` which is the path to the file you want to check.
 Example:
-```
+```python
 student_css = htmlcssgrade.CSS_Check("css/style.css")
 ```
 
@@ -87,18 +157,89 @@ student_css = htmlcssgrade.CSS_Check("css/style.css")
 - `code` - text representation of the css file, which can be printed or parsed.
 
 **Methods:**
-- `check_declaration()` - Given a selector and a declaration, returns True if in CSS.
-- `check_property_used()` - Given a selector and a property name, returns True if property was given a value in CSS.
-- `check_selector_rule()` - Given a selector, property, and property value, returns True if the property is set to that value.
-- `check_selector_has_ruleset()` - Given a selector, returns True if selector has a ruleset.
-- `get_selector_ruleset()` - Given a selector, returns the ruleset text.
-- `get_property_value()` - Given a selector and property, returns the property's value.
-- `check_num_selector_declarations()` - Given a selector and a number, returns True if selector has at least specified number of declarations.
-- `check_num_selector_declarations_equal()` - Given a selector and a number, returns True if selector has exact specified number of declarations.
-- `get_num_selector_declarations()` - Given a selector, returns the number of declarations in the ruleset.
-- `check_num_selector_rulesets()` - Given a number, returns True if number of selector rulesets is greater than or equal to the number.
-- `check_num_selector_rulesets_equal()` - Given a number, returns True if number of selector rulesets is equal to the number.
-- `get_num_selector_rulesets()` - Returns the number of selector rulesets in CSS file.
-- `check_num_declarations()` - Given a number, returns True if number of declarations in CSS file is greater than or equal to the number. 
-- `check_num_declarations_equal()` - Given a number, returns True if number of declarations in CSS file is equal to the number.
-- `get_num_declarations()` - Returns the number of declarations in CSS file.
+- `check_declaration(selector, declaration)` - Given a selector and a declaration, returns True if in CSS.   
+   Example:
+   ```python
+   student_css.check_declaration(".center", "display: block")
+   student_css.check_declaration("body", "background-color: #F06543")
+   ```
+- `check_property_used(selector, property)` - Given a selector and a property name, returns True if property was given a value in CSS.   
+   Example:
+   ```python
+   student_css.check_property_used("body", "background-color")
+   student_css.check_property_used("body", "font-style")
+   ```
+- `check_selector_rule(selector, property, value)` - Given a selector, property, and property value, returns True if the property is set to that value.   
+   Example:
+   ```python
+   student_css.check_selector_rule("body", "background-color", "#F06543")
+   student_css.check_selector_rule("p", "font-style", "16pt")
+   ```
+- `check_selector_has_ruleset(selector)` - Given a selector, returns True if selector has a ruleset.   
+   Example:
+   ```python
+   student_css.check_selector_has_ruleset("body")
+   student_css.check_selector_has_ruleset("p")
+   ```
+- `get_selector_ruleset(selector)` - Given a selector, returns the ruleset text.   
+   Example:
+   ```python
+   student_css.get_selector_ruleset("body")
+   student_css.get_selector_ruleset(".center")
+   ```
+- `get_property_value(selector, property)` - Given a selector and property, returns the property's value.   
+   Example:
+   ```python
+   student_css.get_property_value("body", "background-color")
+   student_css.get_property_value("p", "font-style")
+   ```
+- `check_num_selector_declarations(selector, number)` - Given a selector and a number, returns True if selector has at least specified number of declarations.   
+   Example:
+   ```python
+   student_css.check_num_selector_declarations("body", 3)
+   student_css.check_num_selector_declarations("nav ul", 1)
+   ```
+- `check_num_selector_declarations_equal()` - Given a selector and a number, returns True if selector has exact specified number of declarations.   
+   Example:
+   ```python
+   student_css.check_num_selector_declarations_equal("body", 3)
+   student_css.check_num_selector_declarations_equal("nav ul", 1)
+   ```
+- `get_num_selector_declarations(selector)` - Given a selector, returns the number of declarations in the ruleset.   
+   Example:
+   ```python
+   student_css.get_num_selector_declarations("body")
+   student_css.get_num_selector_declarations("nav ul")
+   ```
+- `check_num_selector_rulesets(number)` - Given a number, returns True if number of selector rulesets is greater than or equal to the number.   
+   Example:
+   ```python
+   student_css.check_num_selector_rulesets(12)
+   student_css.check_num_selector_rulesets(20)
+   ```
+- `check_num_selector_rulesets_equal(number)` - Given a number, returns True if number of selector rulesets is equal to the number.   
+   Example:
+   ```python
+   student_css.check_num_selector_rulesets_equal(12)
+   student_css.check_num_selector_rulesets_equal(20)
+   ```
+- `get_num_selector_rulesets()` - Returns the number of selector rulesets in CSS file.   
+   Example:
+   ```python
+   student_css.get_num_selector_rulesets()
+   ```
+- `check_num_declarations(number)` - Given a number, returns True if number of declarations in CSS file is greater than or equal to the number.    
+   Example:
+   ```python
+   student_css.check_num_declarations(37)
+   ```
+- `check_num_declarations_equal(number)` - Given a number, returns True if number of declarations in CSS file is equal to the number.   
+   Example:
+   ```python
+   student_css.check_num_declarations_equal(37)
+   ```
+- `get_num_declarations()` - Returns the number of declarations in CSS file.   
+   Example:
+   ```python
+   student_css.get_num_declarations()
+   ```
