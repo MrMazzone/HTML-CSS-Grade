@@ -10,7 +10,7 @@ import cssutils
 
 class HTML_Check:
     """
-    Create an object that allows you to check student HTML code.
+    Create an object that allows you to check learner HTML code.
 
     Properties
     ----------
@@ -20,10 +20,10 @@ class HTML_Check:
 
     Methods
     -------
-    check_HTML() - Given a snip of HTML code, returns True if the snip is found in the student's file.
-    check_element_used() - Given an element, returns True if the student used the element.
-    check_num_element_used() - Given an element and number, returns True if student's file has at least specified number of that element. 
-    get_num_element_used() - Given an element, returns the number of times the element is used in student's file.
+    check_HTML() - Given a snip of HTML code, returns True if the snip is found in the learner's file.
+    check_element_used() - Given an element, returns True if the learner used the element.
+    check_num_element_used() - Given an element and number, returns True if learner's file has at least specified number of that element. 
+    get_num_element_used() - Given an element, returns the number of times the element is used in learner's file.
     check_element_content() - Given an element and content, returns True if the content is in the element (ignores captialization, whitespace, etc).
     check_element_content_exact() - Given an element and content, returns True if the content is in the element character for character.
     check_elements_attribute() - Given an element, attribute, and value, returns True if element's attribute is equal to the value.
@@ -42,15 +42,15 @@ class HTML_Check:
         self.code = self.html_obj.prettify()
         
     def check_HTML(self, code_snip):
-        """Does student HTML have ___ code snip?"""
+        """Does learner HTML have ___ code snip?"""
         return (code_snip.casefold().replace(" ", "").replace("\n", "") in str(self.html_obj.contents[2]).casefold().replace(" ", "").replace("\n", ""))
 
     def check_element_used(self, element):
-        """Does student HTML have ___ element?"""
+        """Does learner HTML have ___ element?"""
         return (len(self.html_obj.find_all(element)) > 0)
 
     def check_num_element_used(self, element, number):
-        """Does student HTML have ___ number of ___ element?"""
+        """Does learner HTML have ___ number of ___ element?"""
         return (len(self.html_obj.find_all(element)) >= number)
 
     def get_num_element_used(self, element):
@@ -102,14 +102,14 @@ class HTML_Check:
         return (len(self.html_obj.find_all(element, id=id_name)) > 0)
 
     def check_use_css_file(self, css_filepath):
-        """Does student HTML use ___ CSS file?"""
+        """Does learner HTML use ___ CSS file?"""
         for line in self.html_obj.find_all("link"):
             if (str(line.attrs.get("rel")) == "['stylesheet']" and str(line.attrs.get("href")) == css_filepath):
                 return True
         return False
 
     def check_use_js_file(self, js_filepath):
-        """Does student HTML use ___ JS file?"""
+        """Does learner HTML use ___ JS file?"""
         for line in self.html_obj.find_all("script"):
             if (str(line.attrs.get("type")) == "text/javascript" and str(line.attrs.get("src")) == js_filepath):
                 return True
@@ -118,7 +118,7 @@ class HTML_Check:
 
 class CSS_Check:
     """
-    Create an object that allows you to check student CSS code.
+    Create an object that allows you to check learner CSS code.
 
     Properties
     ----------
