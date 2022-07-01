@@ -142,6 +142,12 @@ learner_html = htmlcssgrade.HTML_Check("index.html")
    learner_html.check_use_js_file("index.js")
    learner_html.check_use_js_file("blah.js")
    ```
+- `extract_style_as_CSS_obj()` - No parameters. Returns css_obj of all CSS found in `<style>` tags in the HTML file/text.
+   Example:
+   ```python
+   learner_css = learner_html.extract_style_as_CSS_obj()
+   ```
+
 
 
 ### CSS_Check Class
