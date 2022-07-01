@@ -1,6 +1,6 @@
 #######################
 # HTML/CSS Grade
-# Version 1.0.1
+# Version 1.0.2
 # Created by Joe Mazzone
 # Documentation: https://github.com/MrMazzone/HTML-CSS-Grade
 #######################
@@ -10,20 +10,20 @@ import cssutils
 
 class HTML_Check:
     """
-    Create an object that allows you to check learner HTML code.
+    Create an object that allows you to check student HTML code.
 
     Properties
     ----------
     filepath - the path to the file you are checking.
     html_obj - the BeautifulSoup object being used.
-    code - text representation of the HTML file, which can be printed or parsed.
+    code - text representation of the css file, which can be printed or parsed.
 
     Methods
     -------
-    check_HTML() - Given a snip of HTML code, returns True if the snip is found in the learner's file.
-    check_element_used() - Given an element, returns True if the learner used the element.
-    check_num_element_used() - Given an element and number, returns True if learner's file has at least specified number of that element. 
-    get_num_element_used() - Given an element, returns the number of times the element is used in learner's file.
+    check_HTML() - Given a snip of HTML code, returns True if the snip is found in the student's file.
+    check_element_used() - Given an element, returns True if the student used the element.
+    check_num_element_used() - Given an element and number, returns True if student's file has at least specified number of that element. 
+    get_num_element_used() - Given an element, returns the number of times the element is used in student's file.
     check_element_content() - Given an element and content, returns True if the content is in the element (ignores captialization, whitespace, etc).
     check_element_content_exact() - Given an element and content, returns True if the content is in the element character for character.
     check_elements_attribute() - Given an element, attribute, and value, returns True if element's attribute is equal to the value.
@@ -34,23 +34,27 @@ class HTML_Check:
     check_element_has_id() - Given an element and id name, returns True if that element was assigned the id.
     check_use_css_file() - Given a CSS filepath, returns True if HTML code uses that CSS file.
     check_use_js_file() - Given a JS filepath, returns True if HTML code uses that JS file.
+    extract_style_as_CSS_obj() - No parameters. Returns css_obj of all CSS found in <style> tags of HTML file.
     """
-    def __init__(self, filepath):
-        self.filepath = filepath
-        with open(filepath) as fp:
-            self.html_obj = BeautifulSoup(fp, 'html.parser')
+    def __init__(self, filepath, text=False):
+        if text:
+            self.html_obj = BeautifulSoup(filepath, 'html.parser')
+        else:
+            self.filepath = filepath
+            with open(filepath) as fp:
+                self.html_obj = BeautifulSoup(fp, 'html.parser')
         self.code = self.html_obj.prettify()
         
     def check_HTML(self, code_snip):
-        """Does learner HTML have ___ code snip?"""
+        """Does student HTML have ___ code snip?"""
         return (code_snip.casefold().replace(" ", "").replace("\n", "") in str(self.html_obj.contents[2]).casefold().replace(" ", "").replace("\n", ""))
 
     def check_element_used(self, element):
-        """Does learner HTML have ___ element?"""
+        """Does student HTML have ___ element?"""
         return (len(self.html_obj.find_all(element)) > 0)
 
     def check_num_element_used(self, element, number):
-        """Does learner HTML have ___ number of ___ element?"""
+        """Does student HTML have ___ number of ___ element?"""
         return (len(self.html_obj.find_all(element)) >= number)
 
     def get_num_element_used(self, element):
@@ -74,7 +78,7 @@ class HTML_Check:
     def check_elements_attribute(self, element, attribute, value):
         """Does ___ element have ___ attribute with ___ value?"""
         for line in self.html_obj.find_all(element):
-            if (value == line.attrs.get(attribute)):
+            if (value == ''.join(line.attrs.get(attribute))):
                 return True
         return False
 
@@ -102,29 +106,37 @@ class HTML_Check:
         return (len(self.html_obj.find_all(element, id=id_name)) > 0)
 
     def check_use_css_file(self, css_filepath):
-        """Does learner HTML use ___ CSS file?"""
+        """Does student HTML use ___ CSS file?"""
         for line in self.html_obj.find_all("link"):
             if (str(line.attrs.get("rel")) == "['stylesheet']" and str(line.attrs.get("href")) == css_filepath):
                 return True
         return False
 
     def check_use_js_file(self, js_filepath):
-        """Does learner HTML use ___ JS file?"""
+        """Does student HTML use ___ JS file?"""
         for line in self.html_obj.find_all("script"):
             if (str(line.attrs.get("type")) == "text/javascript" and str(line.attrs.get("src")) == js_filepath):
                 return True
         return False
+    
+    def extract_style_as_CSS_obj(self):
+        """Returns CSS_Check css_obj of all CSS found in <style> tags of HTML."""
+        style_element_content = ""
+        for style in self.html_obj.find_all("style"):
+            style_element_content += style.contents[0]
+        return CSS_Check(style_element_content, text=True)
+
 
 
 class CSS_Check:
     """
-    Create an object that allows you to check learner CSS code.
+    Create an object that allows you to check student CSS code.
 
     Properties
     ----------
     filepath - the path to the file you are checking.
     css_obj - the cssutils object being used.
-    code - text representation of the CSS file, which can be printed or parsed.
+    code - text representation of the css file, which can be printed or parsed.
 
     Methods
     -------
@@ -144,9 +156,13 @@ class CSS_Check:
     check_num_declarations_equal() - Given a number, returns True if number of declarations in CSS file is equal to the number.
     get_num_declarations() - Returns the number of declarations in CSS file.
     """
-    def __init__(self, filepath):
-        self.filepath = filepath
-        self.css_obj = cssutils.parseFile(filepath)
+    def __init__(self, filepath, text=False):
+        if text:
+            self.filepath = "No Filepath was provided, only text."
+            self.css_obj = cssutils.parseString(filepath)
+        else:
+            self.filepath = filepath
+            self.css_obj = cssutils.parseFile(filepath)
         self.code = self.css_obj.cssText
     
     def check_declaration(self, selector, declaration):
