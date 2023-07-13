@@ -1,12 +1,13 @@
 #######################
 # HTML/CSS Grade
-# Version 1.0.2
+# Version 1.1.0
 # Created by Joe Mazzone
 # Documentation: https://github.com/MrMazzone/HTML-CSS-Grade
 #######################
 
 from bs4 import BeautifulSoup
 import cssutils
+import logging
 
 class HTML_Check:
     """
@@ -60,6 +61,18 @@ class HTML_Check:
     def get_num_element_used(self, element):
         """Gets the number of times ___ element is used."""
         return (len(self.html_obj.find_all(element)))
+    
+    def get_element_content(self, element):
+        """Gets ___ element's content."""
+        for line in self.html_obj.find_all(element):
+            return str(line.contents)
+        
+    def get_all_element_content(self, element):
+        """Gets all ___ element's content in a list."""
+        all_content = []
+        for line in self.html_obj.find_all(element):
+             all_content += line.contents
+        return all_content
 
     def check_element_content(self, element, content):
         """Does ___ element contain ___ content?"""
@@ -75,6 +88,18 @@ class HTML_Check:
                 return True
         return False
 
+    def get_elements_attribute(self, element, attribute):
+        """Gets ___ element's ___ attribute value."""
+        for line in self.html_obj.find_all(element):
+            return line.attrs.get(attribute)
+        
+    def get_all_elements_attribute(self, element, attribute):
+        """Gets all ___ element's ___ attribute value in a list."""
+        all_values = []
+        for line in self.html_obj.find_all(element):
+            all_values.append(line.attrs.get(attribute))
+        return all_values
+    
     def check_elements_attribute(self, element, attribute, value):
         """Does ___ element have ___ attribute with ___ value?"""
         for line in self.html_obj.find_all(element):
@@ -157,6 +182,10 @@ class CSS_Check:
     get_num_declarations() - Returns the number of declarations in CSS file.
     """
     def __init__(self, filepath, text=False):
+        logging.basicConfig(stream="warnings",
+                    format='%(asctime)s %(message)s',)
+        newlog = logging.getLogger()
+        cssutils.log.setLog(newlog)
         if text:
             self.filepath = "No Filepath was provided, only text."
             self.css_obj = cssutils.parseString(filepath)
