@@ -82,6 +82,18 @@ learner_html = htmlcssgrade.HTML_Check("index.html")
    learner_html.get_num_element_used("h2")
    learner_html.get_num_element_used("p")
    ```
+- `get_element_content(element)` - Given an element, returns the content of that element.   
+   Example:
+   ```python
+   learner_html.get_element_content("h2")
+   learner_html.get_element_content("p")
+   ```
+- `get_all_element_content(element)` - Given an element, returns a list with the content for all instances of that element.   
+   Example:
+   ```python
+   learner_html.get_all_element_content("h2")
+   learner_html.get_all_element_content("p")
+   ```
 - `check_element_content(element, content)` - Given an element and content, returns True if the content is in the element (ignores captialization, whitespace, etc).   
    Example:
    ```python
@@ -93,6 +105,18 @@ learner_html = htmlcssgrade.HTML_Check("index.html")
    ```python
    learner_html.check_element_content_exact("a", "Home")
    learner_html.check_element_content_exact("title", "Super Awesome Title")
+   ```
+- `get_elements_attribute_value(element, attribute)` - Given an element and an attribute, returns the value of the element's attribute.   
+   Example:
+   ```python
+   learner_html.get_elements_attribute_value("a", "href")
+   learner_html.get_elements_attribute_value("img", "src")
+   ```
+- `get_all_elements_attribute_value(element, attribute)` - Given an element and an attribute, returns a list of all instances of the element and each one's attribute value.   
+   Example:
+   ```python
+   learner_html.get_all_elements_attribute_value("a", "href")
+   learner_html.get_all_elements_attribute_value("img", "src")
    ```
 - `check_elements_attribute(element, attribute, value)` - Given an element, attribute, and value, returns True if element's attribute is equal to the value.   
    Example:

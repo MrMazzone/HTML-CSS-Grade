@@ -25,8 +25,12 @@ class HTML_Check:
     check_element_used() - Given an element, returns True if the student used the element.
     check_num_element_used() - Given an element and number, returns True if student's file has at least specified number of that element. 
     get_num_element_used() - Given an element, returns the number of times the element is used in student's file.
+    get_element_content() - Given an element, returns the content of that element.
+    get_all_element_content() - Given an element, returns a list with the content for all instances of that element.
     check_element_content() - Given an element and content, returns True if the content is in the element (ignores captialization, whitespace, etc).
     check_element_content_exact() - Given an element and content, returns True if the content is in the element character for character.
+    get_elements_attribute_value() - Given an element and an attribute, returns the value of the element's attribute.
+    get_all_elements_attribute_value() - Given an element and an attribute, returns a list of all instances of the element and each one's attribute value.
     check_elements_attribute() - Given an element, attribute, and value, returns True if element's attribute is equal to the value.
     check_element_has_attribute() - Given an element and attribute, returns True if element's attribute was assigned any value.
     get_list_of_elements_with_class() - Given a class name, returns a list of all elements with class set to given name.
@@ -88,12 +92,12 @@ class HTML_Check:
                 return True
         return False
 
-    def get_elements_attribute(self, element, attribute):
+    def get_elements_attribute_value(self, element, attribute):
         """Gets ___ element's ___ attribute value."""
         for line in self.html_obj.find_all(element):
             return line.attrs.get(attribute)
         
-    def get_all_elements_attribute(self, element, attribute):
+    def get_all_elements_attribute_value(self, element, attribute):
         """Gets all ___ element's ___ attribute value in a list."""
         all_values = []
         for line in self.html_obj.find_all(element):
