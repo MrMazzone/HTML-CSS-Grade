@@ -1,6 +1,6 @@
 #######################
 # HTML/CSS Grade
-# Version 1.1.0
+# Version 1.1.1
 # Created by Joe Mazzone
 # Documentation: https://github.com/MrMazzone/HTML-CSS-Grade
 #######################
@@ -8,6 +8,7 @@
 from bs4 import BeautifulSoup
 import cssutils
 import logging
+import os
 
 class HTML_Check:
     """
@@ -186,7 +187,7 @@ class CSS_Check:
     get_num_declarations() - Returns the number of declarations in CSS file.
     """
     def __init__(self, filepath, text=False):
-        logging.basicConfig(stream="warnings",
+        logging.basicConfig(filename=os.devnull,
                     format='%(asctime)s %(message)s',)
         newlog = logging.getLogger()
         cssutils.log.setLog(newlog)
